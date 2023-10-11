@@ -10,6 +10,28 @@ import { Constructing } from '@site/src/components/Constructing'
 
 <Constructing />
 
+### 消息发送示例
+
+```js
+const resp = await fetch("http://127.0.0.1:5500/v1/message.create", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer satori token(可在config/chronocat.yml文件中找到)",
+    "X-Platform": "qq",
+    "X-Self-ID": "bot qq号",
+  },
+  body: `{"channel_id":"QQ群号","content":"hello"}`,
+  // body: `{"channel_id":"private:1000 (1000为QQ号)","content":"hello"}`,
+});
+if (resp.status != 200) {
+  const msg = await resp.text();
+  throw new Error(msg);
+}
+const body = await resp.json();
+console.log(body);
+```
+
 欢迎来到 Chronocat 的 Satori Protocol 协议文档！Satori 是 Chronocat
 推荐使用的协议，基于 Satori 开发可以带来最佳的开发体验。
 
